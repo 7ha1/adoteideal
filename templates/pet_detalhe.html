@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block title %}{{ pet.nome }} - AdoteIdeal{% endblock %}
+{% block content %}
+
+<style>
+    @media (max-width: 768px) {
+        .pet-detail-grid {
+            grid-template-columns: 1fr !important;
+        }
+        .pet-img-col {
+            min-height: 300px;
+        }
+    }
+</style>
+
+<div style="max-width: 1000px; margin: 0 auto;">
+    <div style="background: white; border-radius: 32px; border: 1px solid #efe8dd; overflow: hidden; margin-bottom: 40px;">
+        <div class="pet-detail-grid" style="display: grid; grid-template-columns: 1fr 1fr; align-items: stretch;">
+            <div class="pet-img-col" style="background: #f0f4ec; overflow: hidden; min-height: 100%; display: flex;">
+                <img src="{{ pet.foto_url or 'https://placehold.co/800x800/e8e2d4/8a9a8a?text=AdoteIdeal' }}" 
+                     alt="{{ pet.nome }}"
+                     style="width: 100%; height: 100%; object-fit: cover; display: block;">
+            </div>
+            <div style="padding: 28px; display: flex; flex-direction: column; justify-content: center;">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; margin-bottom: 12px;">
+                    <h2 style="font-size: 1.8rem; font-weight: 700; margin: 0;">{{ pet.nome }}</h2>
+                    <span style="background: #3B7A5710; color: #3B7A57; padding: 6px 16px; border-radius: 40px; font-size: 0.8rem; font-weight: 600;">
+                        {% if pet.especie == 'cao' %}🐕 Cachorro{% else %}🐱 Gato{% endif %}
+                    </span>
+                </div>
+
+                <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px;">
+                    <span class="personality-tag" style="background: #f0f4ec; border-radius: 20px; padding: 6px 14px; font-size: 0.75rem;">📏 {{ pet.porte|capitalize }}</span>
+                    <span class="personality-tag" style="background: #f0f4ec; border-radius: 20px; padding: 6px 14px; font-size: 0.75rem;">⚡ {{ pet.energia|capitalize }}</span>
+                    {% if pet.idade_meses >= 12 %}
+                    <span class="personality-tag">🎂 {{ (pet.idade_meses // 12) }} ano(s)</span>
+                    {% else %}
+                    <span class="personality-tag">🎂 {{ pet.idade_meses }} meses</span>
+                    {% endif %}
+                    {% if pet.vacinado %}<span class="personality-tag">💉 Vacinado</span>{% endif %}
+                    {% if pet.castrado %}<span class="personality-tag">✂️ Castrado</span>{% endif %}
+                    {% if pet.aceita_criancas %}<span class="personality-tag">👶 Aceita crianças</span>{% endif %}
+                    {% if pet.aceita_gatos %}<span class="personality-tag">🐱 Aceita gatos</span>{% endif %}
+                    {% if pet.aceita_caes %}<span class="personality-tag">🐕 Aceita outros cães</span>{% endif %}
+                </div>
+
+                <p style="color: #2C3E2F; margin-bottom: 20px; line-height: 1.5; font-style: italic;">
+                    "{{ pet.descricao[:200] }}{% if pet.descricao|length > 200 %}...{% endif %}"
+                </p>
+
+                <div style="background: #fefcf5; border-radius: 20px; padding: 16px; margin-bottom: 20px;">
+                    <h3 style="font-size: 0.9rem; margin-bottom: 12px;">🎯 Personalidade</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+                        {% if pet.independencia == 'alta' %}
+                        <div><span style="font-weight: 600;">😌 Independente</span><br><span style="font-size: 0.7rem;">Lida bem com períodos sozinho</span></div>
+                        {% elif pet.independencia == 'baixa' %}
+                        <div><span style="font-weight: 600;">❤️ Grudento</span><br><span style="font-size: 0.7rem;">Gosta de companhia constante</span></div>
+                        {% else %}
+                        <div><span style="font-weight: 600;">⚖️ Equilibrado</span><br><span style="font-size: 0.7rem;">Se adapta bem a diferentes rotinas</span></div>
+                        {% endif %}
+
+                        {% if pet.vocalizacao == 'alta' %}
+                        <div><span style="font-weight: 600;">🗣️ Comunicativo</span><br><span style="font-size: 0.7rem;">Costuma se expressar vocalmente</span></div>
+                        {% elif pet.vocalizacao == 'baixa' %}
+                        <div><span style="font-weight: 600;">🤫 Silencioso</span><br><span style="font-size: 0.7rem;">Raramente late/mia</span></div>
+                        {% else %}
+                        <div><span style="font-weight: 600;">🔊 Vocalização normal</span><br><span style="font-size: 0.7rem;">Comunicação equilibrada</span></div>
+                        {% endif %}
+
+                        {% if pet.nivel_atividade == 'alta' %}
+                        <div><span style="font-weight: 600;">⚡ Muito ativo</span><br><span style="font-size: 0.7rem;">Precisa de exercícios diários</span></div>
+                        {% elif pet.nivel_atividade == 'baixa' %}
+                        <div><span style="font-weight: 600;">😴 Calmo</span><br><span style="font-size: 0.7rem;">Prefere ambientes tranquilos</span></div>
+                        {% else %}
+                        <div><span style="font-weight: 600;">🏃 Atividade média</span><br><span style="font-size: 0.7rem;">Equilibrado entre descanso e brincadeiras</span></div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div style="background: #f0f4ec; border-radius: 16px; padding: 12px 16px; margin-bottom: 20px;">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+                        <i data-lucide="building-2" class="icon" style="width: 16px; height: 16px; color: #3B7A57;"></i>
+                        <span style="font-weight: 600; font-size: 0.85rem;">{{ pet.ong.nome_ong }}</span>
+                    </div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 12px; font-size: 0.7rem; color: #5A6A5A;">
+                        {% if pet.ong.cidade %}<div><i data-lucide="map-pin" class="icon" style="width: 12px; height: 12px;"></i> {{ pet.ong.cidade }}</div>{% endif %}
+                        {% if pet.ong.whatsapp %}<div><i data-lucide="phone" class="icon" style="width: 12px; height: 12px;"></i> {{ pet.ong.whatsapp }}</div>{% endif %}
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                    <a href="{{ url_for('interesse', pet_id=pet.id) }}" class="btn" style="flex: 1; text-align: center; padding: 12px;">🐾 Tenho interesse em adotar</a>
+                    <!-- Botão Voltar corrigido: agora usa histórico do navegador -->
+                    <a href="javascript:history.back()" class="btn-outline" style="flex: 1; text-align: center; padding: 12px;">← Voltar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>lucide.createIcons();</script>
+{% endblock %}

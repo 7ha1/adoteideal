@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: adoteideal
+    runtime: python
+    repo: https://github.com/SEU_USUARIO/adoteideal
+    plan: free
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.8

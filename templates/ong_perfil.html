@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Meu Perfil{% endblock %}
+{% block content %}
+
+<style>
+    .danger-zone {
+        margin-top: 32px;
+        padding-top: 20px;
+        border-top: 2px solid #f0eae0;
+    }
+    .btn-danger {
+        background: #e74c3c;
+        color: white;
+        border: none;
+    }
+    .btn-danger:hover {
+        background: #c0392b;
+    }
+</style>
+
+<div style="max-width: 600px; margin: 0 auto;">
+    <div class="card" style="padding: 32px;">
+        <div style="text-align: center; margin-bottom: 24px;">
+            <i data-lucide="user" class="icon" style="width: 40px; height: 40px; color: #36946f;"></i>
+            <h2 style="font-size: 1.5rem; margin-top: 8px;">Meu Perfil</h2>
+        </div>
+        
+        <form method="POST" action="{{ url_for('ong_perfil') }}">
+            <div style="margin-bottom: 16px;">
+                <label>Nome da ONG *</label>
+                <input type="text" name="nome_ong" value="{{ ong.nome_ong }}" required>
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <label>E-mail</label>
+                <input type="email" name="email" value="{{ ong.email or '' }}">
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <label>Telefone / WhatsApp</label>
+                <input type="text" name="whatsapp" value="{{ ong.whatsapp or '' }}">
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <label>Cidade</label>
+                <input type="text" name="cidade" value="{{ ong.cidade or '' }}">
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <label>Endereço</label>
+                <input type="text" name="endereco" value="{{ ong.endereco or '' }}">
+            </div>
+            
+            <hr style="margin: 20px 0; border-color: #edf2f7;">
+            
+            <div style="margin-bottom: 16px;">
+                <label>Nova senha (deixe em branco para manter)</label>
+                <input type="password" name="nova_senha" placeholder="••••••">
+            </div>
+            
+            <button type="submit" class="btn" style="width: 100%;">Salvar alterações</button>
+        </form>
+        
+        <!-- Zona de perigo: exclusão da conta -->
+        <div class="danger-zone">
+            <h3 style="color: #e74c3c; font-size: 1.1rem;">⚠️ Zona de perigo</h3>
+            <p style="font-size: 0.8rem; color: #5a6e7c;">Ao excluir sua conta, todos os seus pets e interesses serão permanentemente removidos.</p>
+            <form method="POST" action="{{ url_for('ong_excluir') }}" onsubmit="return confirm('Tem certeza? Esta ação é irreversível.')">
+                <div style="margin-bottom: 12px;">
+                    <label>Digite <strong>SIM</strong> para confirmar a exclusão</label>
+                    <input type="text" name="confirmar" placeholder="SIM" required style="margin-top: 4px;">
+                </div>
+                <button type="submit" class="btn btn-danger" style="width: 100%;">🗑️ Excluir minha conta</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}Cadastrar ONG{% endblock %}
+{% block content %}
+
+<style>
+    .toggle-password {
+        cursor: pointer;
+        margin-left: 8px;
+        font-size: 0.8rem;
+        color: #3B7A57;
+    }
+    .password-wrapper {
+        display: flex;
+        align-items: center;
+    }
+    .password-wrapper input {
+        flex: 1;
+    }
+</style>
+
+<div style="max-width: 600px; margin: 0 auto;">
+    <div class="card" style="padding: 32px;">
+        <div style="text-align: center; margin-bottom: 24px;">
+            <i data-lucide="building-2" class="icon" style="width: 40px; height: 40px; color: #36946f;"></i>
+            <h2 style="font-size: 1.5rem; margin-top: 8px;">Cadastrar ONG</h2>
+            <p style="color: #5a6e7c;">Crie sua conta para começar a cadastrar pets</p>
+        </div>
+        
+        <form method="POST">
+            <div style="margin-bottom: 16px;">
+                <label>Nome da ONG *</label>
+                <input type="text" name="nome_ong" required placeholder="Ex: Amigos dos Animais">
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <label>Usuário *</label>
+                <input type="text" name="username" required placeholder="Escolha um nome de usuário">
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <label>Senha *</label>
+                <div class="password-wrapper">
+                    <input type="password" name="senha" id="senha" required placeholder="••••••">
+                    <span class="toggle-password" onclick="togglePassword('senha')">👁️</span>
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <label>Confirmar senha *</label>
+                <div class="password-wrapper">
+                    <input type="password" name="confirmar_senha" id="confirmar_senha" required placeholder="••••••">
+                    <span class="toggle-password" onclick="togglePassword('confirmar_senha')">👁️</span>
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <label>E-mail</label>
+                <input type="email" name="email" placeholder="contato@ong.com">
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <label>Telefone / WhatsApp</label>
+                <input type="text" name="whatsapp" placeholder="(11) 99999-9999">
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <label>Cidade</label>
+                <input type="text" name="cidade" placeholder="São Paulo - SP">
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <label>Endereço (opcional)</label>
+                <input type="text" name="endereco" placeholder="Rua, número, bairro">
+            </div>
+            
+            <button type="submit" class="btn" style="width: 100%;">Cadastrar</button>
+        </form>
+        
+        <p style="margin-top: 20px; text-align: center; font-size: 0.8rem;">
+            Já tem cadastro? <a href="/ong/login" style="color: #36946f;">Faça login</a>
+        </p>
+    </div>
+</div>
+
+<script>
+    function togglePassword(fieldId) {
+        var field = document.getElementById(fieldId);
+        if (field.type === "password") {
+            field.type = "text";
+        } else {
+            field.type = "password";
+        }
+    }
+</script>
+
+{% endblock %}

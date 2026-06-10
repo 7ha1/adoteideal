@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% block title %}Editar {{ pet.nome }}{% endblock %}
+{% block content %}
+
+<div style="max-width: 600px; margin: 0 auto;">
+    <div class="card" style="padding: 32px;">
+        <h2 style="font-size: 1.5rem; margin-bottom: 8px;">✏️ Editar {{ pet.nome }}</h2>
+        <p style="color: #5a6e7c; margin-bottom: 24px;">Atualize as informações do pet</p>
+        
+        <form method="POST" enctype="multipart/form-data">
+            <!-- Dados básicos -->
+            <div style="margin-bottom: 16px;">
+                <label>Nome *</label>
+                <input type="text" name="nome" value="{{ pet.nome }}" required>
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <label>Espécie *</label>
+                <select name="especie" required>
+                    <option value="cao" {% if pet.especie == 'cao' %}selected{% endif %}>Cachorro</option>
+                    <option value="gato" {% if pet.especie == 'gato' %}selected{% endif %}>Gato</option>
+                </select>
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <label>Sexo</label>
+                <select name="sexo">
+                    <option value="macho" {% if pet.sexo == 'macho' %}selected{% endif %}>Macho</option>
+                    <option value="femea" {% if pet.sexo == 'femea' %}selected{% endif %}>Fêmea</option>
+                </select>
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <label>Porte *</label>
+                <select name="porte" required>
+                    <option value="pequeno" {% if pet.porte == 'pequeno' %}selected{% endif %}>Pequeno</option>
+                    <option value="medio" {% if pet.porte == 'medio' %}selected{% endif %}>Médio</option>
+                    <option value="grande" {% if pet.porte == 'grande' %}selected{% endif %}>Grande</option>
+                </select>
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <label>Idade *</label>
+                <div style="display: flex; gap: 12px;">
+                    <input type="number" name="idade_valor" required style="flex: 2;" min="0" step="1" 
+                           value="{% if pet.idade_meses >= 12 %}{{ pet.idade_meses // 12 }}{% else %}{{ pet.idade_meses }}{% endif %}">
+                    <select name="idade_unidade" required style="flex: 1;">
+                        <option value="meses" {% if pet.idade_meses < 12 %}selected{% endif %}>Meses</option>
+                        <option value="anos" {% if pet.idade_meses >= 12 %}selected{% endif %}>Anos</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <label>Energia *</label>
+                <select name="energia" required>
+                    <option value="baixa" {% if pet.energia == 'baixa' %}selected{% endif %}>Baixa (dorminhoco, tranquilo)</option>
+                    <option value="media" {% if pet.energia == 'media' %}selected{% endif %}>Média (brinca, mas descansa)</option>
+                    <option value="alta" {% if pet.energia == 'alta' %}selected{% endif %}>Alta (muito ativo)</option>
+                </select>
+            </div>
+            
+            <!-- Convivência -->
+            <div style="margin-bottom: 12px; display: flex; align-items: center; gap: 12px;">
+                <input type="checkbox" name="aceita_criancas" id="aceita_criancas" {% if pet.aceita_criancas %}checked{% endif %} style="width: auto;">
+                <label for="aceita_criancas" style="margin: 0;">Aceita crianças</label>
+            </div>
+            
+            <div style="margin-bottom: 12px; display: flex; align-items: center; gap: 12px;">
+                <input type="checkbox" name="aceita_gatos" id="aceita_gatos" {% if pet.aceita_gatos %}checked{% endif %} style="width: auto;">
+                <label for="aceita_gatos" style="margin: 0;">Aceita gatos</label>
+            </div>
+            
+            <div style="margin-bottom: 12px; display: flex; align-items: center; gap: 12px;">
+                <input type="checkbox" name="aceita_caes" id="aceita_caes" {% if pet.aceita_caes %}checked{% endif %} style="width: auto;">
+                <label for="aceita_caes" style="margin: 0;">Aceita outros cães</label>
+            </div>
+            
+            <div style="margin-bottom: 12px; display: flex; align-items: center; gap: 12px;">
+                <input type="checkbox" name="vacinado" id="vacinado" {% if pet.vacinado %}checked{% endif %} style="width: auto;">
+                <label for="vacinado" style="margin: 0;">Vacinado</label>
+            </div>
+            
+            <div style="margin-bottom: 12px; display: flex; align-items: center; gap: 12px;">
+                <input type="checkbox" name="castrado" id="castrado" {% if pet.castrado %}checked{% endif %} style="width: auto;">
+                <label for="castrado" style="margin: 0;">Castrado</label>
+            </div>
+            
+            <!-- Personalidade (apenas independência) -->
+            <fieldset style="margin: 24px 0 16px 0; border: none; padding: 0;">
+                <legend style="font-size: 1rem; font-weight: 600; color: #3B7A57; margin-bottom: 16px;">🎯 Personalidade</legend>
+                
+                <div style="margin-bottom: 16px;">
+                    <label>Independência</label>
+                    <select name="independencia">
+                        <option value="baixa" {% if pet.independencia == 'baixa' %}selected{% endif %}>Baixa (apegado, precisa de companhia)</option>
+                        <option value="media" {% if pet.independencia == 'media' %}selected{% endif %}>Média (equilibrado)</option>
+                        <option value="alta" {% if pet.independencia == 'alta' %}selected{% endif %}>Alta (independente, lida bem sozinho)</option>
+                    </select>
+                </div>
+                
+                <div style="margin-bottom: 16px;">
+                    <label>Vocalização</label>
+                    <select name="vocalizacao">
+                        <option value="baixa" {% if pet.vocalizacao == 'baixa' %}selected{% endif %}>Baixa (quase não late/mia)</option>
+                        <option value="media" {% if pet.vocalizacao == 'media' %}selected{% endif %}>Média (normal)</option>
+                        <option value="alta" {% if pet.vocalizacao == 'alta' %}selected{% endif %}>Alta (muito vocal)</option>
+                    </select>
+                </div>
+                
+                <div style="margin-bottom: 16px;">
+                    <label>Nível de atividade</label>
+                    <select name="nivel_atividade">
+                        <option value="baixa" {% if pet.nivel_atividade == 'baixa' %}selected{% endif %}>Baixa (sedentário)</option>
+                        <option value="media" {% if pet.nivel_atividade == 'media' %}selected{% endif %}>Média (brinca moderadamente)</option>
+                        <option value="alta" {% if pet.nivel_atividade == 'alta' %}selected{% endif %}>Alta (muito ativo)</option>
+                    </select>
+                </div>
+            </fieldset>
+            
+            <!-- Descrição e foto -->
+            <div style="margin-bottom: 16px;">
+                <label>Descrição</label>
+                <textarea name="descricao" rows="3">{{ pet.descricao }}</textarea>
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <label>Foto atual</label>
+                {% if pet.foto_url and pet.foto_url != '/static/uploads/default.jpg' %}
+                    <div style="margin-bottom: 8px;">
+                        <img src="{{ pet.foto_url }}" alt="{{ pet.nome }}" style="width: 100px; height: 100px; object-fit: cover; border-radius: 12px;">
+                    </div>
+                {% endif %}
+                <input type="file" name="foto" accept="image/png, image/jpeg, image/jpg, image/gif, image/webp" style="padding: 8px;">
+                <small style="color: #5a6e7c; font-size: 0.7rem;">Deixe em branco para manter a foto atual</small>
+            </div>
+            
+            <button type="submit" class="btn" style="width: 100%;">💾 Salvar alterações</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

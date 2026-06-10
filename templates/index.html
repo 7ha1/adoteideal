@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+{% block title %}Adoção consciente com compatibilidade{% endblock %}
+{% block content %}
+
+<style>
+    .hero-wave {
+        background: linear-gradient(135deg, #fefcf5 0%, #f0f4ec 100%);
+        border-radius: 0 0 48px 48px;
+        margin-top: -20px;
+        padding-top: 20px;
+    }
+    .cta-pulse { animation: pulse 2s infinite; }
+    @keyframes pulse {
+        0% { box-shadow: 0 0 0 0 rgba(217,122,92,0.4); }
+        70% { box-shadow: 0 0 0 15px rgba(217,122,92,0); }
+        100% { box-shadow: 0 0 0 0 rgba(217,122,92,0); }
+    }
+    .stat-card { transition: all 0.3s ease; }
+    .stat-card:hover { transform: translateY(-5px); }
+    .pet-card {
+        transition: all 0.3s ease;
+        cursor: pointer;
+        background: white;
+        border-radius: 24px;
+        overflow: hidden;
+        border: 1px solid #efe8dd;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    }
+    .pet-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 35px rgba(0,0,0,0.05);
+        border-color: #e0d6c8;
+    }
+    .btn-outline-strong {
+        background: transparent;
+        border: 1.5px solid #D97A5C;
+        color: #D97A5C;
+        transition: all 0.2s ease;
+        text-decoration: none;
+    }
+    .btn-outline-strong:hover {
+        background: #D97A5C;
+        color: white;
+        transform: translateY(-2px);
+    }
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 24px;
+    }
+    @media (max-width: 640px) {
+        .grid { grid-template-columns: 1fr; }
+    }
+</style>
+
+<div class="hero-wave" style="padding: 60px 0 70px 0;">
+    <div style="max-width: 900px; margin: 0 auto; text-align: center; padding: 0 20px;">
+        <h1 style="font-size: 3rem; font-weight: 700; color: #2C3E2F; margin-bottom: 20px; line-height: 1.2;">
+            Adotar é amor.<br>
+            <span style="color: #D97A5C;">Combinar é cuidado.</span>
+        </h1>
+        <p style="font-size: 1.1rem; color: #5A6A5A; max-width: 550px; margin: 0 auto 32px auto;">
+            Descubra pets compatíveis com seu estilo de vida. Menos devoluções, mais conexões reais.
+        </p>
+        <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+            <a href="/questionario" class="btn cta-pulse" style="font-size: 1rem; padding: 14px 32px;">Encontrar meu match</a>
+            <a href="/sobre" class="btn-outline-strong" style="font-size: 1rem; padding: 14px 32px; border-radius: 40px;">Conhecer o projeto</a>
+        </div>
+    </div>
+</div>
+
+<div style="max-width: 1000px; margin: -30px auto 60px auto; padding: 0 20px;">
+    <div style="display: flex; flex-wrap: wrap; gap: 24px; justify-content: center;">
+        <div class="stat-card" style="background: white; border-radius: 24px; padding: 24px 20px; text-align: center; flex: 1; min-width: 180px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid #efe8dd;">
+            <div style="background: #f0f4ec; width: 50px; height: 50px; border-radius: 25px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px auto;"><i data-lucide="heart" class="icon" style="width: 24px; height: 24px; color: #D97A5C;"></i></div>
+            <h3 style="font-size: 1rem; margin-bottom: 8px;">Adoção consciente</h3>
+            <p style="color: #8a9a8a; font-size: 0.75rem;">Menos devoluções, mais bem-estar</p>
+        </div>
+        <div class="stat-card" style="background: white; border-radius: 24px; padding: 24px 20px; text-align: center; flex: 1; min-width: 180px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid #efe8dd;">
+            <div style="background: #f0f4ec; width: 50px; height: 50px; border-radius: 25px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px auto;"><i data-lucide="git-graph" class="icon" style="width: 24px; height: 24px; color: #3B7A57;"></i></div>
+            <h3 style="font-size: 1rem; margin-bottom: 8px;">Compatibilidade real</h3>
+            <p style="color: #8a9a8a; font-size: 0.75rem;">Algoritmo que considera perfil e rotina</p>
+        </div>
+        <div class="stat-card" style="background: white; border-radius: 24px; padding: 24px 20px; text-align: center; flex: 1; min-width: 180px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid #efe8dd;">
+            <div style="background: #f0f4ec; width: 50px; height: 50px; border-radius: 25px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px auto;"><i data-lucide="building-2" class="icon" style="width: 24px; height: 24px; color: #D97A5C;"></i></div>
+            <h3 style="font-size: 1rem; margin-bottom: 8px;">Apoio a ONGs</h3>
+            <p style="color: #8a9a8a; font-size: 0.75rem;">Ferramentas para gestão de adoções</p>
+        </div>
+    </div>
+</div>
+
+<div style="background: #fefcf5; padding: 60px 0; margin-bottom: 60px;">
+    <div style="max-width: 1000px; margin: 0 auto; padding: 0 20px; text-align: center;">
+        <h2 style="font-size: 1.8rem; margin-bottom: 12px;">Como funciona</h2>
+        <p style="color: #5A6A5A; margin-bottom: 48px;">Três passos para uma adoção mais consciente</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 40px; justify-content: center;">
+            <div style="flex: 1; min-width: 200px;"><div style="background: white; width: 70px; height: 70px; border-radius: 35px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px auto;"><span style="font-size: 1.5rem; font-weight: 700; color: #3B7A57;">1</span></div><h3 style="font-size: 1rem;">Conte sobre você</h3><p style="color: #5A6A5A; font-size: 0.8rem;">Rotina, experiência, espaço e preferências</p></div>
+            <div style="flex: 1; min-width: 200px;"><div style="background: white; width: 70px; height: 70px; border-radius: 35px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px auto;"><span style="font-size: 1.5rem; font-weight: 700; color: #3B7A57;">2</span></div><h3 style="font-size: 1rem;">Calculamos compatibilidade</h3><p style="color: #5A6A5A; font-size: 0.8rem;">Algoritmo analisa perfis e gera score</p></div>
+            <div style="flex: 1; min-width: 200px;"><div style="background: white; width: 70px; height: 70px; border-radius: 35px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px auto;"><span style="font-size: 1.5rem; font-weight: 700; color: #3B7A57;">3</span></div><h3 style="font-size: 1rem;">Conheça seu match</h3><p style="color: #5A6A5A; font-size: 0.8rem;">ONG entra em contato para adoção</p></div>
+        </div>
+    </div>
+</div>
+
+<div style="max-width: 1000px; margin: 0 auto 60px auto; padding: 0 20px;">
+    <div style="text-align: center;">
+        <h2 style="font-size: 1.5rem; margin-bottom: 8px;">Conheça alguns de nossos pets</h2>
+        <p style="color: #5A6A5A; margin-bottom: 32px;">Eles estão esperando por um lar compatível</p>
+    </div>
+
+    <div class="grid">
+        {% for pet in pets[:6] %}
+        <div class="pet-card" onclick="window.location.href='/pet/{{ pet.id }}'">
+            <div style="aspect-ratio: 1 / 1; background: #f0f4ec; overflow: hidden;">
+                <img src="{{ pet.foto_url }}" 
+                     style="width: 100%; height: 100%; object-fit: cover; display: block;"
+                     onerror="this.src='https://placehold.co/400x400/e8e2d4/8a9a8a?text=AdoteIdeal'">
+            </div>
+            <div style="padding: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                    <h3 style="font-size: 1.1rem; font-weight: 600; margin:0;">{{ pet.nome }}</h3>
+                    <span style="background: #3B7A5710; color: #3B7A57; padding: 4px 8px; border-radius: 20px; font-size: 0.65rem;">
+                        {% if pet.energia == 'alta' %}Alta energia{% elif pet.energia == 'media' %}Energia média{% else %}Baixa energia{% endif %}
+                    </span>
+                </div>
+                <div style="margin-top: 8px;">
+                    <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px;">
+                        <span style="background: #f0f4ec; padding: 2px 8px; border-radius: 12px; font-size: 0.6rem;">{{ pet.porte|capitalize }}</span>
+                        {% if pet.aceita_criancas %}
+                        <span style="background: #f0f4ec; padding: 2px 8px; border-radius: 12px; font-size: 0.6rem;">Aceita crianças</span>
+                        {% endif %}
+                    </div>
+                    <div style="background: #f0f4ec; border-radius: 20px; height: 4px;">
+                        <div style="background: #3B7A57; width: {% if pet.energia == 'alta' %}80{% elif pet.energia == 'media' %}50{% else %}30{% endif %}%; height: 4px; border-radius: 20px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div style="text-align: center; margin-top: 32px;">
+        <a href="/pets" class="btn-outline-strong" style="display: inline-block; padding: 12px 28px; border-radius: 40px;">Ver todos os pets →</a>
+    </div>
+</div>
+
+<div style="background: linear-gradient(135deg, #2D8A5F 0%, #3B7A57 100%); border-radius: 32px; margin: 0 20px 60px 20px; padding: 48px 32px; text-align: center; color: white;">
+    <i data-lucide="building-2" class="icon" style="width: 48px; height: 48px; margin-bottom: 16px; color: white;"></i>
+    <h2 style="font-size: 1.5rem; margin-bottom: 12px;">Sua ONG pode participar</h2>
+    <p style="opacity: 0.9; max-width: 500px; margin: 0 auto 24px auto;">Cadastre seus animais, gerencie interesses e encontre adotantes compatíveis.</p>
+    <a href="/ong/cadastrar" class="btn" style="background: white; color: #2D8A5F; border: none; padding: 12px 28px;">Cadastrar minha ONG</a>
+</div>
+
+<div style="text-align: center; padding: 40px 20px 20px 20px;">
+    <i data-lucide="heart" class="icon" style="width: 28px; height: 28px; color: #D97A5C; margin-bottom: 12px;"></i>
+    <p style="font-size: 0.85rem; color: #8a9a8a; max-width: 500px; margin: 0 auto;">"A adoção certa começa com a compatibilidade certa."</p>
+</div>
+
+{% endblock %}

@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% block title %}Painel da ONG{% endblock %}
+{% block content %}
+
+<div style="max-width: 1200px; margin: 0 auto;">
+    <!-- Cabeçalho -->
+    <div style="margin-bottom: 32px;">
+        <h1 style="font-size: 1.8rem; font-weight: 700; margin-bottom: 8px;">📊 Painel da ONG</h1>
+        <p style="color: #5A6A5A;">Gerencie os pets cadastrados e visualize interesses de adoção</p>
+    </div>
+
+    <!-- Seção de Pets -->
+    <div style="margin-bottom: 48px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 16px;">
+            <h2 style="font-size: 1.3rem; font-weight: 600;">🐾 Pets cadastrados</h2>
+            <a href="/cadastrar_pet" class="btn" style="padding: 8px 20px;">+ Novo pet</a>
+        </div>
+        
+        {% if pets and pets|length > 0 %}
+        <div style="background: white; border-radius: 24px; border: 1px solid #efe8dd; overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="border-bottom: 1px solid #e8e2d4; background: #fefcf5;">
+                        <th style="padding: 16px; text-align: left; font-weight: 600; color: #2C3E2F;">Nome</th>
+                        <th style="padding: 16px; text-align: left; font-weight: 600; color: #2C3E2F;">Espécie</th>
+                        <th style="padding: 16px; text-align: left; font-weight: 600; color: #2C3E2F;">Porte</th>
+                        <th style="padding: 16px; text-align: left; font-weight: 600; color: #2C3E2F;">Idade</th>
+                        <th style="padding: 16px; text-align: left; font-weight: 600; color: #2C3E2F;">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pet in pets %}
+                    <tr style="border-bottom: 1px solid #f0eae0;">
+                        <td style="padding: 14px 16px;">
+                            <a href="{{ url_for('pet_detalhe', pet_id=pet.id) }}" style="color: #3B7A57; text-decoration: none; font-weight: 500;">
+                                {{ pet.nome }}
+                            </a>
+                        </td>
+                        <td style="padding: 14px 16px; color: #5A6A5A;">{% if pet.especie == 'cao' %}Cachorro{% else %}Gato{% endif %}</td>
+                        <td style="padding: 14px 16px; color: #5A6A5A;">{{ pet.porte|capitalize }}</td>
+                        <td style="padding: 14px 16px; color: #5A6A5A;">
+                            {% if pet.idade_meses >= 12 %}
+                                {{ (pet.idade_meses // 12) }} ano(s)
+                            {% else %}
+                                {{ pet.idade_meses }} meses
+                            {% endif %}
+                        </td>
+                        <td style="padding: 14px 16px;">
+                            <a href="{{ url_for('editar_pet', pet_id=pet.id) }}" style="color: #3B7A57; text-decoration: none; margin-right: 16px;">✏️ Editar</a>
+                            <a href="{{ url_for('excluir_pet', pet_id=pet.id) }}" style="color: #D97A5C; text-decoration: none;" onclick="return confirm('Tem certeza que deseja excluir {{ pet.nome }}?')">🗑️ Excluir</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div style="background: white; border-radius: 24px; padding: 48px; text-align: center; border: 1px solid #efe8dd;">
+            <i data-lucide="paw-print" class="icon" style="width: 48px; height: 48px; color: #8a9a8a;"></i>
+            <p style="margin-top: 16px; color: #5A6A5A;">Nenhum pet cadastrado ainda.</p>
+            <a href="/cadastrar_pet" class="btn-outline" style="margin-top: 16px; display: inline-block;">+ Cadastrar primeiro pet</a>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Seção de Interesses -->
+    <div>
+        <h2 style="font-size: 1.3rem; font-weight: 600; margin-bottom: 20px;">💌 Interesses registrados</h2>
+        
+        {% if interesses and interesses|length > 0 %}
+        <div style="background: white; border-radius: 24px; border: 1px solid #efe8dd; overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="border-bottom: 1px solid #e8e2d4; background: #fefcf5;">
+                        <th style="padding: 16px; text-align: left; font-weight: 600; color: #2C3E2F;">Pet</th>
+                        <th style="padding: 16px; text-align: left; font-weight: 600; color: #2C3E2F;">Adotante</th>
+                        <th style="padding: 16px; text-align: left; font-weight: 600; color: #2C3E2F;">Telefone</th>
+                        <th style="padding: 16px; text-align: left; font-weight: 600; color: #2C3E2F;">Mensagem</th>
+                        <th style="padding: 16px; text-align: left; font-weight: 600; color: #2C3E2F;">Data</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for interesse in interesses %}
+                    <tr style="border-bottom: 1px solid #f0eae0;">
+                        <td style="padding: 14px 16px;">
+                            <a href="{{ url_for('pet_detalhe', pet_id=interesse.pet.id) }}" style="color: #3B7A57; text-decoration: none; font-weight: 500;">
+                                {{ interesse.pet.nome }}
+                            </a>
+                        </td>
+                        <td style="padding: 14px 16px; color: #5A6A5A;">{{ interesse.nome_adotante }}</td>
+                        <td style="padding: 14px 16px; color: #5A6A5A;">{{ interesse.telefone }}</td>
+                        <td style="padding: 14px 16px; color: #5A6A5A; max-width: 250px;">{{ interesse.mensagem[:80] }}{% if interesse.mensagem|length > 80 %}...{% endif %}</td>
+                        <td style="padding: 14px 16px; color: #8a9a8a; font-size: 0.8rem;">{{ interesse.data_registro.strftime('%d/%m/%Y') if interesse.data_registro else '-' }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div style="background: white; border-radius: 24px; padding: 48px; text-align: center; border: 1px solid #efe8dd;">
+            <i data-lucide="inbox" class="icon" style="width: 48px; height: 48px; color: #8a9a8a;"></i>
+            <p style="margin-top: 16px; color: #5A6A5A;">Nenhum interesse registrado ainda.</p>
+            <p style="font-size: 0.8rem; color: #8a9a8a;">Quando alguém se interessar por um pet, aparecerá aqui.</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Links de navegação (Perfil e Logout) -->
+    <div style="text-align: center; margin-top: 48px;">
+        <a href="/ong/perfil" class="btn-secondary" style="display: inline-block; padding: 10px 20px; margin-right: 12px;">👤 Meu Perfil</a>
+        <a href="/logout" class="btn-secondary" style="display: inline-block; padding: 10px 20px;">🚪 Sair</a>
+    </div>
+</div>
+
+{% endblock %}

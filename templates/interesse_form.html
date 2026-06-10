@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Tenho interesse em {{ pet.nome }}{% endblock %}
+{% block content %}
+<div style="max-width: 600px; margin: 0 auto;">
+    <div class="card" style="padding: 32px;">
+        <h2 style="font-size: 1.5rem; margin-bottom: 8px;">❤️ Tenho interesse em {{ pet.nome }}</h2>
+        <p style="color: #5a6e7c; margin-bottom: 24px;">Preencha seus dados para que a ONG entre em contato</p>
+        
+        <form method="POST">
+            <div style="margin-bottom: 16px;">
+                <label>Seu nome completo *</label>
+                <input type="text" name="nome" required placeholder="Ex: Ana Silva">
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <label>Telefone (com DDD) *</label>
+                <input type="tel" name="telefone" required placeholder="(11) 99999-9999">
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <label>Mensagem (opcional)</label>
+                <textarea name="mensagem" rows="3" placeholder="Conte um pouco sobre você, sua casa, e por que gostaria de adotar o {{ pet.nome }}..."></textarea>
+            </div>
+            
+            <button type="submit" class="btn" style="width: 100%;">📨 Enviar interesse</button>
+        </form>
+    </div>
+    
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="{{ url_for('pet_detalhe', pet_id=pet.id) }}" class="btn-secondary" style="display: inline-block; padding: 10px 20px; border: 1px solid #dfe6ee; border-radius: 40px; color: #4a5568; text-decoration: none;">← Voltar</a>
+    </div>
+</div>
+{% endblock %}

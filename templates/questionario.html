@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+{% block title %}Questionário - Encontre seu pet ideal{% endblock %}
+{% block content %}
+<div style="max-width: 700px; margin: 0 auto;">
+    <div class="card" style="padding: 28px 32px;">
+        <h2 style="font-size: 1.4rem; margin-bottom: 6px; font-weight: 600;">Encontre seu pet ideal</h2>
+        <p style="color: #5a6e7c; margin-bottom: 20px; font-size: 0.85rem;">Responda as perguntas para encontrarmos o amigo perfeito para você</p>
+        
+        <form method="POST">
+            <!-- Seção 1 -->
+            <fieldset style="border: none; margin-bottom: 24px; padding: 0;">
+                <legend style="font-size: 0.9rem; font-weight: 600; color: #36946f; margin-bottom: 14px; padding-bottom: 4px; border-bottom: 1px solid #edf2f7; width: 100%; display: flex; align-items: center; gap: 6px;">
+                    <i data-lucide="home" class="icon" style="width: 14px; height: 14px;"></i> Sobre sua casa e rotina
+                </legend>
+                
+                <div style="margin-bottom: 14px;">
+                    <label>Tipo de moradia *</label>
+                    <select name="moradia" required>
+                        <option value="">Selecione...</option>
+                        <option value="casa_quintal">Casa com quintal</option>
+                        <option value="casa_sem_quintal">Casa sem quintal</option>
+                        <option value="apartamento">Apartamento</option>
+                    </select>
+                </div>
+                
+                <div style="margin-bottom: 14px;">
+                    <label>Quanto tempo você fica fora de casa? *</label>
+                    <select name="tempo_ausente" required>
+                        <option value="">Selecione...</option>
+                        <option value="pouco">Menos de 4 horas</option>
+                        <option value="medio">Entre 4 e 8 horas</option>
+                        <option value="muito">Mais de 8 horas</option>
+                    </select>
+                </div>
+                
+                <div style="margin-bottom: 14px;">
+                    <label>Como é sua rotina de atividades?</label>
+                    <select name="atividade">
+                        <option value="">Indiferente</option>
+                        <option value="sedentario">Sedentário</option>
+                        <option value="moderado">Moderadamente ativo</option>
+                        <option value="ativo">Muito ativo</option>
+                    </select>
+                </div>
+            </fieldset>
+            
+            <!-- Seção 2 -->
+            <fieldset style="border: none; margin-bottom: 24px; padding: 0;">
+                <legend style="font-size: 0.9rem; font-weight: 600; color: #36946f; margin-bottom: 14px; padding-bottom: 4px; border-bottom: 1px solid #edf2f7; width: 100%; display: flex; align-items: center; gap: 6px;">
+                    <i data-lucide="users" class="icon" style="width: 14px; height: 14px;"></i> Sobre sua família
+                </legend>
+                
+                <div style="margin-bottom: 14px;">
+                    <label>Você tem crianças na casa?</label>
+                    <select name="criancas">
+                        <option value="nao">Não</option>
+                        <option value="sim">Sim</option>
+                    </select>
+                </div>
+                
+                <div style="margin-bottom: 14px;">
+                    <label>Você tem outros pets?</label>
+                    <select name="outros_pets">
+                        <option value="nao">Não</option>
+                        <option value="cao">Sim, cachorro</option>
+                        <option value="gato">Sim, gato</option>
+                        <option value="ambos">Sim, ambos</option>
+                    </select>
+                </div>
+                
+                <div style="margin-bottom: 14px;">
+                    <label>Sua experiência com pets *</label>
+                    <select name="experiencia" required>
+                        <option value="">Selecione...</option>
+                        <option value="primeiro">Primeiro pet</option>
+                        <option value="alguma">Já tive pets antes</option>
+                        <option value="avancada">Experiência avançada</option>
+                    </select>
+                </div>
+                
+                <div style="margin-bottom: 14px;">
+                    <label>Como lida com latidos/miada ou bagunça?</label>
+                    <select name="tolerancia">
+                        <option value="">Indiferente</option>
+                        <option value="baixa">Baixa tolerância</option>
+                        <option value="media">Tolerância média</option>
+                        <option value="alta">Alta tolerância</option>
+                    </select>
+                </div>
+            </fieldset>
+            
+            <!-- Seção 3 -->
+            <fieldset style="border: none; margin-bottom: 24px; padding: 0;">
+                <legend style="font-size: 0.9rem; font-weight: 600; color: #36946f; margin-bottom: 14px; padding-bottom: 4px; border-bottom: 1px solid #edf2f7; width: 100%; display: flex; align-items: center; gap: 6px;">
+                    <i data-lucide="paw-print" class="icon" style="width: 14px; height: 14px;"></i> Sobre o pet que você procura
+                </legend>
+                
+                <div style="margin-bottom: 14px;">
+                    <label>Espécie *</label>
+                    <select name="especie" required>
+                        <option value="">Selecione...</option>
+                        <option value="cao">Cachorro</option>
+                        <option value="gato">Gato</option>
+                        <option value="ambos">Ambos</option>
+                    </select>
+                </div>
+                
+                <div style="margin-bottom: 14px;">
+                    <label>Porte</label>
+                    <select name="porte">
+                        <option value="">Indiferente</option>
+                        <option value="pequeno">Pequeno (até 10kg)</option>
+                        <option value="medio">Médio (10-25kg)</option>
+                        <option value="grande">Grande (+25kg)</option>
+                    </select>
+                </div>
+                
+                <div style="margin-bottom: 14px;">
+                    <label>Idade preferida</label>
+                    <select name="idade_preferida">
+                        <option value="">Indiferente</option>
+                        <option value="filhote">Filhote</option>
+                        <option value="adulto">Adulto</option>
+                        <option value="senior">Sênior</option>
+                    </select>
+                </div>
+                
+                <div style="margin-bottom: 14px;">
+                    <label>Nível de energia</label>
+                    <select name="energia">
+                        <option value="">Indiferente</option>
+                        <option value="baixa">Baixa</option>
+                        <option value="media">Média</option>
+                        <option value="alta">Alta</option>
+                    </select>
+                </div>
+                
+                <div style="margin-bottom: 14px;">
+                    <label>Sexo preferido</label>
+                    <select name="sexo">
+                        <option value="">Indiferente</option>
+                        <option value="macho">Macho</option>
+                        <option value="femea">Fêmea</option>
+                    </select>
+                </div>
+            </fieldset>
+            
+            <div style="background: #f8fafc; padding: 12px 14px; border-radius: 12px; margin-bottom: 20px; font-size: 0.75rem; color: #2c5282;">
+                💡 Quanto mais informações você fornecer, mais precisa será a recomendação.
+            </div>
+            
+            <button type="submit" class="btn" style="width: 100%;">Encontrar meu pet ideal</button>
+        </form>
+    </div>
+    
+    <div style="text-align: center; margin-top: 16px;">
+        <a href="/" class="btn-secondary" style="display: inline-block; padding: 8px 18px; border: 1px solid #dfe6ee; border-radius: 40px; color: #4a5568; text-decoration: none; font-size: 0.75rem;">← Voltar ao início</a>
+    </div>
+</div>
+{% endblock %}

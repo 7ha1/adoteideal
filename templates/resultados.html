@@ -1,0 +1,230 @@
+{% extends "base.html" %}
+{% block title %}Seus matches - AdoteIdeal{% endblock %}
+{% block content %}
+
+<style>
+    .match-card {
+        transition: all 0.3s ease;
+        border: 1px solid #efe8dd;
+    }
+    .match-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 35px rgba(0, 0, 0, 0.05);
+        border-color: #e0d6c8;
+    }
+    .badge-match {
+        background: #3B7A5710;
+        color: #3B7A57;
+        border-radius: 40px;
+        padding: 6px 14px;
+        font-size: 0.7rem;
+        font-weight: 600;
+    }
+    .badge-high {
+        background: #D97A5C10;
+        color: #D97A5C;
+    }
+    .personality-tag {
+        background: #f0f4ec;
+        border-radius: 20px;
+        padding: 6px 14px;
+        display: inline-block;
+        font-size: 0.75rem;
+        color: #3B7A57;
+        margin: 0 4px 8px 0;
+    }
+    .tooltip-icon {
+        cursor: help;
+        margin-left: 6px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 18px;
+        height: 18px;
+        background: #e8e2d4;
+        border-radius: 50%;
+        font-size: 12px;
+        font-weight: bold;
+        color: #5a6e7c;
+    }
+    .tooltip-icon:hover {
+        background: #D97A5C;
+        color: white;
+    }
+    .thumb-wrapper {
+        width: 70px;
+        height: 70px;
+        background: #f0f4ec;
+        border-radius: 20px;
+        overflow: hidden;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .thumb-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .match-badge-container {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 12px;
+    }
+    .match-percent {
+        background: #D97A5C10;
+        border-radius: 40px;
+        padding: 4px 16px;
+        font-weight: 700;
+        color: #D97A5C;
+        font-size: 1rem;
+    }
+    .match-text {
+        background: #3B7A5710;
+        border-radius: 40px;
+        padding: 4px 16px;
+        font-size: 0.8rem;
+        color: #3B7A57;
+    }
+    @media (max-width: 768px) {
+        .main-match-grid {
+            grid-template-columns: 1fr !important;
+        }
+        .img-col {
+            min-height: 300px;
+        }
+    }
+</style>
+
+<div style="max-width: 1000px; margin: 0 auto;">
+    <div style="margin-bottom: 32px;">
+        <h1 style="font-size: 1.8rem; font-weight: 700; margin-bottom: 8px;">🐾 Seus matches personalizados</h1>
+        <p style="color: #5A6A5A;">Combinamos seu perfil com nossos pets cadastrados. Quanto maior a compatibilidade, melhores as chances de uma adoção feliz.</p>
+    </div>
+
+    {% if resultados and resultados|length > 0 %}
+        {% set principal = resultados[0] %}
+        <!-- Match principal: foto ocupa 100% da coluna esquerda -->
+        <div class="match-card" style="background: white; border-radius: 32px; overflow: hidden; margin-bottom: 40px;">
+            <div class="main-match-grid" style="display: grid; grid-template-columns: 1fr 1fr; align-items: stretch;">
+                <!-- Coluna da imagem (sem padding, imagem cobre tudo) -->
+                <div class="img-col" style="background: #f0f4ec; overflow: hidden; min-height: 100%; display: flex;">
+                    <img src="{{ principal.pet.foto_url or 'https://placehold.co/800x800/e8e2d4/8a9a8a?text=AdoteIdeal' }}" 
+                         alt="{{ principal.pet.nome }}"
+                         style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                </div>
+                <!-- Coluna das informações -->
+                <div style="padding: 28px; display: flex; flex-direction: column; justify-content: center;">
+                    <div class="match-badge-container">
+                        <h2 style="font-size: 1.8rem; font-weight: 700; margin: 0;">{{ principal.pet.nome }}</h2>
+                        <span class="match-percent">{{ principal.percentual }}% compatível
+                            <span class="tooltip-icon" title="Compatibilidade calculada com base em: energia, tempo disponível, moradia, convivência com outros animais e preferências informadas.">ⓘ</span>
+                        </span>
+                        <span class="match-text">{{ principal.texto_match }}</span>
+                    </div>
+
+                    <div style="margin: 12px 0 8px 0;">
+                        <span style="background: #D97A5C10; color: #D97A5C; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem;">
+                            {{ principal.frase_personalizada }}
+                        </span>
+                    </div>
+
+                    <div style="display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 16px;">
+                        {% if principal.pet.energia == 'baixa' %}<span class="personality-tag">😌 Tranquilo</span>{% elif principal.pet.energia == 'media' %}<span class="personality-tag">🎯 Equilibrado</span>{% else %}<span class="personality-tag">⚡ Energético</span>{% endif %}
+                        {% if principal.pet.aceita_criancas %}<span class="personality-tag">👶 Bom com crianças</span>{% endif %}
+                        {% if principal.pet.aceita_gatos %}<span class="personality-tag">🐱 Aceita gatos</span>{% endif %}
+                        {% if principal.pet.independencia == 'alta' %}<span class="personality-tag">🏠 Independente</span>{% elif principal.pet.independencia == 'baixa' %}<span class="personality-tag">❤️ Grudento</span>{% endif %}
+                    </div>
+
+                    <p style="color: #2C3E2F; margin-bottom: 20px; line-height: 1.5; font-style: italic;">
+                        "{{ principal.pet.descricao[:180] }}{% if principal.pet.descricao|length > 180 %}...{% endif %}"
+                    </p>
+
+                    <div style="background: #fefcf5; border-radius: 20px; padding: 16px; margin-bottom: 20px;">
+                        <h3 style="font-size: 0.9rem; margin-bottom: 12px;">🧠 Por que esse match?</h3>
+                        {% if principal.logs %}
+                        <div style="display: flex; flex-direction: column; gap: 10px;">
+                            {% for log in principal.logs %}
+                                {% if log and 'INFORMAÇÕES SOBRE O PET' not in log and '📌' not in log %}
+                                    <div style="padding: 6px 8px; border-radius: 12px; border-left: 2px solid #e8e2d4;">
+                                        <span style="font-size: 0.7rem; color: #5A6A5A;">✓ {{ log }}</span>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <p style="color: #5A6A5A; font-size: 0.8rem;">Responda mais perguntas para ver os motivos detalhados do match.</p>
+                        {% endif %}
+                    </div>
+
+                    <div style="background: #f0f4ec; border-radius: 16px; padding: 12px 16px; margin-bottom: 20px;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+                            <i data-lucide="building-2" class="icon" style="width: 16px; height: 16px; color: #3B7A57;"></i>
+                            <span style="font-weight: 600; font-size: 0.85rem;">{{ principal.pet.ong.nome_ong }}</span>
+                        </div>
+                        <div style="display: flex; flex-wrap: wrap; gap: 12px; font-size: 0.7rem; color: #5A6A5A;">
+                            {% if principal.pet.ong.cidade %}<div><i data-lucide="map-pin" class="icon" style="width: 12px; height: 12px;"></i> {{ principal.pet.ong.cidade }}</div>{% endif %}
+                            {% if principal.pet.ong.whatsapp %}<div><i data-lucide="phone" class="icon" style="width: 12px; height: 12px;"></i> {{ principal.pet.ong.whatsapp }}</div>{% endif %}
+                        </div>
+                    </div>
+
+                    <a href="{{ url_for('interesse', pet_id=principal.pet.id) }}" class="btn" style="display: inline-block; width: 100%; text-align: center; padding: 12px;">🐾 Quero conhecer {{ principal.pet.nome }}</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Outros matches -->
+        {% if resultados|length > 1 %}
+        <div style="margin-top: 32px;">
+            <h3 style="font-size: 1.2rem; margin-bottom: 20px;">✨ Outras boas opções para você</h3>
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+                {% for resultado in resultados[1:] %}
+                <div class="match-card" style="background: white; border-radius: 24px; padding: 16px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center;">
+                    <div class="thumb-wrapper">
+                        <img src="{{ resultado.pet.foto_url or 'https://placehold.co/200x200/e8e2d4/8a9a8a?text=Pet' }}" 
+                             alt="{{ resultado.pet.nome }}">
+                    </div>
+                    <div style="flex: 2; min-width: 160px;">
+                        <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap;">
+                            <h4 style="font-size: 1.1rem; font-weight: 600; margin: 0;">{{ resultado.pet.nome }}</h4>
+                            <span class="badge-match" style="font-size: 0.8rem;">{{ resultado.percentual }}% compatível</span>
+                        </div>
+                        <div style="display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0;">
+                            <span class="badge-match">{% if resultado.pet.especie == 'cao' %}Cachorro{% else %}Gato{% endif %}</span>
+                            <span class="badge-match">{{ resultado.pet.porte|capitalize }}</span>
+                            <span class="badge-match">⚡ {{ resultado.pet.energia|capitalize }}</span>
+                        </div>
+                        <div style="font-size: 0.7rem; color: #5A6A5A; font-style: italic;">"{{ resultado.pet.descricao[:80] }}{% if resultado.pet.descricao|length > 80 %}...{% endif %}"</div>
+                    </div>
+                    <a href="{{ url_for('pet_detalhe', pet_id=resultado.pet.id) }}" class="btn-outline" style="padding: 8px 20px; white-space: nowrap;">Ver detalhes →</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <div style="background: #fefcf5; border-radius: 20px; padding: 20px; margin-top: 40px; text-align: center; border: 1px solid #efe8dd;">
+            <i data-lucide="git-graph" class="icon" style="width: 28px; height: 28px; color: #8a9a8a; margin-bottom: 8px;"></i>
+            <h4 style="font-size: 0.9rem; margin-bottom: 6px;">Como calculamos a compatibilidade?</h4>
+            <p style="font-size: 0.7rem; color: #8a9a8a;">O sistema compara seu perfil (rotina, moradia, experiência e preferências) com as características de cada pet. Critérios como energia, tempo disponível, convivência com outros animais e nível de independência recebem pesos específicos para gerar uma recomendação explicável e transparente.</p>
+        </div>
+    {% else %}
+        <div style="text-align: center; background: white; border-radius: 32px; padding: 60px 24px;">
+            <i data-lucide="alert-circle" class="icon" style="width: 48px; height: 48px; color: #8a9a8a;"></i>
+            <h3 style="margin-top: 16px;">Nenhum pet encontrado</h3>
+            <p style="color: #5A6A5A; margin-top: 8px;">Não encontramos pets compatíveis com seu perfil no momento.</p>
+            <a href="/questionario" class="btn-outline" style="margin-top: 20px; display: inline-block;">Refazer questionário</a>
+        </div>
+    {% endif %}
+    
+    <div style="text-align: center; margin-top: 40px;">
+        <a href="/questionario" class="btn-outline" style="display: inline-block;">← Refazer questionário</a>
+    </div>
+</div>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>lucide.createIcons();</script>
+{% endblock %}

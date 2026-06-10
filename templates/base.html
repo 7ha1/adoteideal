@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>AdoteIdeal - {% block title %}Adoção consciente com compatibilidade{% endblock %}</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, 'Segoe UI', 'Inter', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #fefcf5;  /* off-white acolhedor */
+            color: #2C3E2F;  /* verde escuro suave */
+            line-height: 1.5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header transparente com sombra suave */
+        .header {
+            background: #fefcf5;
+            border-bottom: 1px solid #e8e2d4;
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background: rgba(254, 252, 245, 0.95);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #3B7A57;
+        }
+        
+        .logo a {
+            color: #3B7A57;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nav {
+            display: flex;
+            gap: 32px;
+            flex-wrap: wrap;
+        }
+        
+        .nav a {
+            color: #2C3E2F;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        
+        .nav a:hover {
+            color: #D97A5C;
+            transform: translateY(-1px);
+        }
+        
+        /* Botão primário - coral/terracota */
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            background: #D97A5C;
+            color: white;
+            text-decoration: none;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(217, 122, 92, 0.2);
+        }
+        
+        .btn:hover {
+            background: #c56a4e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(217, 122, 92, 0.3);
+        }
+        
+        /* Botão secundário - verde sálvia */
+        .btn-secondary {
+            background: #3B7A57;
+            box-shadow: 0 2px 8px rgba(59, 122, 87, 0.15);
+        }
+        
+        .btn-secondary:hover {
+            background: #2e6243;
+        }
+        
+        /* Botão outline */
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #D97A5C;
+            color: #D97A5C;
+            box-shadow: none;
+        }
+        
+        .btn-outline:hover {
+            background: #D97A5C;
+            color: white;
+        }
+        
+        /* Cards com borda suave */
+        .card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s ease;
+            border: 1px solid #efe8dd;
+        }
+        
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 32px;
+        }
+        
+        /* Formulários */
+        input, select, textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #e8e2d4;
+            border-radius: 16px;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            font-family: inherit;
+            background: white;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #D97A5C;
+            box-shadow: 0 0 0 3px rgba(217, 122, 92, 0.1);
+        }
+        
+        label {
+            font-weight: 500;
+            margin-bottom: 8px;
+            display: block;
+            color: #2C3E2F;
+            font-size: 0.85rem;
+        }
+        
+        .icon {
+            width: 18px;
+            height: 18px;
+            stroke-width: 1.8;
+            stroke: currentColor;
+            fill: none;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        
+        /* Flash messages */
+        .flash-messages {
+            max-width: 1200px;
+            margin: 20px auto 0 auto;
+            padding: 0 20px;
+        }
+        
+        .flash-success {
+            background: #e6f4e8;
+            color: #2e6243;
+            padding: 14px 20px;
+            border-radius: 16px;
+            margin-bottom: 12px;
+            font-size: 0.85rem;
+            border-left: 4px solid #3B7A57;
+        }
+        
+        .flash-error {
+            background: #fdece8;
+            color: #c56a4e;
+            padding: 14px 20px;
+            border-radius: 16px;
+            margin-bottom: 12px;
+            font-size: 0.85rem;
+            border-left: 4px solid #D97A5C;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 32px;
+            margin-top: 64px;
+            color: #8a9a8a;
+            font-size: 0.75rem;
+            border-top: 1px solid #e8e2d4;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .nav {
+                justify-content: center;
+                gap: 24px;
+            }
+            .grid {
+                gap: 20px;
+            }
+            .btn {
+                padding: 10px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">
+                <a href="/">
+                    <i data-lucide="heart" class="icon" style="width: 22px; height: 22px;"></i>
+                    AdoteIdeal
+                </a>
+            </div>
+            <div class="nav">
+                <a href="/">Início</a>
+                <a href="/questionario">Encontrar match</a>
+                <a href="/sobre">Sobre</a>
+                <a href="/ong/login">ONG</a>
+            </div>
+        </div>
+    </div>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flash-messages">
+            {% for category, message in messages %}
+                <div class="flash-{{ category if category in ['success', 'error'] else 'info' }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    {% endwith %}
+    
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+    
+    <footer>
+        <p>AdoteIdeal — Adoção consciente baseada em compatibilidade</p>
+    </footer>
+    
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

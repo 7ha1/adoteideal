@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Acesso ONG{% endblock %}
+{% block content %}
+<div style="max-width: 400px; margin: 40px auto;">
+    <div class="card" style="padding: 32px;">
+        <div style="text-align: center; margin-bottom: 24px;">
+            <i data-lucide="building" class="icon" style="width: 40px; height: 40px; color: #36946f;"></i>
+            <h2 style="font-size: 1.5rem; margin-top: 8px;">Área da ONG</h2>
+        </div>
+        
+        <form method="POST">
+            <div style="margin-bottom: 20px;">
+                <label>Senha de acesso</label>
+                <input type="password" name="senha" placeholder="Digite a senha" required>
+            </div>
+            <button type="submit" class="btn" style="width: 100%;">Entrar</button>
+        </form>
+        
+        <p style="margin-top: 20px; font-size: 0.75rem; color: #95a5a6; text-align: center;">
+            <i data-lucide="key" class="icon"></i> Use a senha padrão: 123
+        </p>
+    </div>
+</div>
+{% endblock %}

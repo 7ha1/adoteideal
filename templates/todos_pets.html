@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}Todos os pets - AdoteIdeal{% endblock %}
+{% block content %}
+
+<style>
+    .pet-card {
+        transition: all 0.3s ease;
+        cursor: pointer;
+        background: white;
+        border-radius: 24px;
+        overflow: hidden;
+        border: 1px solid #efe8dd;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    }
+    .pet-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 35px rgba(0, 0, 0, 0.05);
+        border-color: #e0d6c8;
+    }
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 24px;
+    }
+    @media (max-width: 640px) {
+        .grid {
+            grid-template-columns: 1fr;
+        }
+    }
+    .btn-outline-strong {
+        background: transparent;
+        border: 1.5px solid #D97A5C;
+        color: #D97A5C;
+        transition: all 0.2s ease;
+        display: inline-block;
+        padding: 10px 24px;
+        border-radius: 40px;
+        text-decoration: none;
+    }
+    .btn-outline-strong:hover {
+        background: #D97A5C;
+        color: white;
+    }
+</style>
+
+<div style="max-width: 1000px; margin: 0 auto 60px auto; padding: 0 20px;">
+    <div style="text-align: center; margin-bottom: 40px;">
+        <h1 style="font-size: 1.8rem; font-weight: 700; margin-bottom: 8px;">🐾 Todos os nossos pets</h1>
+        <p style="color: #5A6A5A;">Conheça cada um deles e encontre o seu companheiro ideal</p>
+    </div>
+
+    {% if pets and pets|length > 0 %}
+    <div class="grid">
+        {% for pet in pets %}
+        <div class="pet-card" onclick="window.location.href='/pet/{{ pet.id }}'">
+            <div style="aspect-ratio: 1 / 1; background: #f0f4ec; overflow: hidden;">
+                <img src="{{ pet.foto_url }}" 
+                     style="width: 100%; height: 100%; object-fit: cover; display: block;"
+                     onerror="this.src='https://placehold.co/400x400/e8e2d4/8a9a8a?text=AdoteIdeal'">
+            </div>
+            <div style="padding: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                    <h3 style="font-size: 1.1rem; font-weight: 600; margin: 0;">{{ pet.nome }}</h3>
+                    <span style="background: #3B7A5710; color: #3B7A57; padding: 4px 8px; border-radius: 20px; font-size: 0.65rem;">
+                        {% if pet.energia == 'alta' %}Alta energia{% elif pet.energia == 'media' %}Energia média{% else %}Baixa energia{% endif %}
+                    </span>
+                </div>
+                <div style="margin-top: 8px;">
+                    <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px;">
+                        <span style="background: #f0f4ec; padding: 2px 8px; border-radius: 12px; font-size: 0.6rem;">{{ pet.porte|capitalize }}</span>
+                        {% if pet.aceita_criancas %}
+                        <span style="background: #f0f4ec; padding: 2px 8px; border-radius: 12px; font-size: 0.6rem;">Aceita crianças</span>
+                        {% endif %}
+                    </div>
+                    <div style="background: #f0f4ec; border-radius: 20px; height: 4px;">
+                        <div style="background: #3B7A57; width: {% if pet.energia == 'alta' %}80{% elif pet.energia == 'media' %}50{% else %}30{% endif %}%; height: 4px; border-radius: 20px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div style="text-align: center; background: white; border-radius: 32px; padding: 60px 24px;">
+        <i data-lucide="alert-circle" class="icon" style="width: 48px; height: 48px; color: #8a9a8a;"></i>
+        <h3 style="margin-top: 16px;">Nenhum pet cadastrado ainda</h3>
+        <p style="color: #5A6A5A;">Volte em breve ou cadastre sua ONG para começar.</p>
+    </div>
+    {% endif %}
+
+    <div style="text-align: center; margin-top: 40px;">
+        <a href="/" class="btn-outline-strong">← Voltar para a home</a>
+    </div>
+</div>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>lucide.createIcons();</script>
+{% endblock %}

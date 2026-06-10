@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% block title %}Cadastrar Pet{% endblock %}
+{% block content %}
+
+<div style="max-width: 600px; margin: 0 auto;">
+    <div class="card" style="padding: 32px;">
+        <h2 style="font-size: 1.5rem; margin-bottom: 8px;">➕ Cadastrar novo pet</h2>
+        <p style="color: #5a6e7c; margin-bottom: 24px;">Preencha as informações do animal disponível para adoção</p>
+        
+        <form method="POST" enctype="multipart/form-data">
+            <!-- Dados básicos -->
+            <div style="margin-bottom: 16px;">
+                <label>Nome *</label>
+                <input type="text" name="nome" required placeholder="Ex: Luna, Thor, Mel">
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <label>Espécie *</label>
+                <select name="especie" required>
+                    <option value="cao">Cachorro</option>
+                    <option value="gato">Gato</option>
+                </select>
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <label>Sexo</label>
+                <select name="sexo">
+                    <option value="macho">Macho</option>
+                    <option value="femea">Fêmea</option>
+                </select>
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <label>Porte *</label>
+                <select name="porte" required>
+                    <option value="pequeno">Pequeno</option>
+                    <option value="medio">Médio</option>
+                    <option value="grande">Grande</option>
+                </select>
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <label>Idade *</label>
+                <div style="display: flex; gap: 12px;">
+                    <input type="number" name="idade_valor" required style="flex: 2;" min="0" step="1" placeholder="Número">
+                    <select name="idade_unidade" required style="flex: 1;">
+                        <option value="meses">Meses</option>
+                        <option value="anos">Anos</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <label>Energia *</label>
+                <select name="energia" required>
+                    <option value="baixa">Baixa (dorminhoco, tranquilo)</option>
+                    <option value="media">Média (brinca, mas descansa)</option>
+                    <option value="alta">Alta (muito ativo)</option>
+                </select>
+            </div>
+            
+            <!-- Convivência -->
+            <div style="margin-bottom: 12px; display: flex; align-items: center; gap: 12px;">
+                <input type="checkbox" name="aceita_criancas" id="aceita_criancas" style="width: auto;">
+                <label for="aceita_criancas" style="margin: 0;">Aceita crianças</label>
+            </div>
+            
+            <div style="margin-bottom: 12px; display: flex; align-items: center; gap: 12px;">
+                <input type="checkbox" name="aceita_gatos" id="aceita_gatos" style="width: auto;">
+                <label for="aceita_gatos" style="margin: 0;">Aceita gatos</label>
+            </div>
+            
+            <div style="margin-bottom: 12px; display: flex; align-items: center; gap: 12px;">
+                <input type="checkbox" name="aceita_caes" id="aceita_caes" style="width: auto;">
+                <label for="aceita_caes" style="margin: 0;">Aceita outros cães</label>
+            </div>
+            
+            <div style="margin-bottom: 12px; display: flex; align-items: center; gap: 12px;">
+                <input type="checkbox" name="vacinado" id="vacinado" style="width: auto;">
+                <label for="vacinado" style="margin: 0;">Vacinado</label>
+            </div>
+            
+            <div style="margin-bottom: 12px; display: flex; align-items: center; gap: 12px;">
+                <input type="checkbox" name="castrado" id="castrado" style="width: auto;">
+                <label for="castrado" style="margin: 0;">Castrado</label>
+            </div>
+            
+            <!-- Personalidade (apenas independência) -->
+            <fieldset style="margin: 24px 0 16px 0; border: none; padding: 0;">
+                <legend style="font-size: 1rem; font-weight: 600; color: #3B7A57; margin-bottom: 16px;">🎯 Personalidade</legend>
+                
+                <div style="margin-bottom: 16px;">
+                    <label>Independência</label>
+                    <select name="independencia">
+                        <option value="baixa">Baixa (apegado, precisa de companhia)</option>
+                        <option value="media" selected>Média (equilibrado)</option>
+                        <option value="alta">Alta (independente, lida bem sozinho)</option>
+                    </select>
+                </div>
+                
+                <div style="margin-bottom: 16px;">
+                    <label>Vocalização</label>
+                    <select name="vocalizacao">
+                        <option value="baixa">Baixa (quase não late/mia)</option>
+                        <option value="media" selected>Média (normal)</option>
+                        <option value="alta">Alta (muito vocal)</option>
+                    </select>
+                </div>
+                
+                <div style="margin-bottom: 16px;">
+                    <label>Nível de atividade</label>
+                    <select name="nivel_atividade">
+                        <option value="baixa">Baixa (sedentário)</option>
+                        <option value="media" selected>Média (brinca moderadamente)</option>
+                        <option value="alta">Alta (muito ativo)</option>
+                    </select>
+                </div>
+                <!-- Campo tolerancia_solidao removido -->
+            </fieldset>
+            
+            <!-- Descrição e foto -->
+            <div style="margin-bottom: 16px;">
+                <label>Descrição</label>
+                <textarea name="descricao" rows="3" placeholder="Conte um pouco sobre a personalidade e história do pet..."></textarea>
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <label>Foto do pet</label>
+                <input type="file" name="foto" accept="image/png, image/jpeg, image/jpg, image/gif, image/webp" style="padding: 8px;">
+                <small style="color: #5a6e7c; font-size: 0.7rem;">Formatos aceitos: PNG, JPG, JPEG, GIF, WEBP (máx 16MB)</small>
+            </div>
+            
+            <button type="submit" class="btn" style="width: 100%;">💾 Salvar pet</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
