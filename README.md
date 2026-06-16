@@ -101,6 +101,16 @@ Essas entidades permitem armazenar informações dos animais, perfis dos adotant
 
 ---
 
+## Observação sobre os Dados
+
+Os dados utilizados na demonstração da plataforma são fictícios e foram criados exclusivamente para fins acadêmicos, demonstração e validação do sistema.
+
+Nenhuma informação pessoal real de adotantes, organizações de proteção animal ou animais cadastrados foi utilizada durante o desenvolvimento do projeto.
+
+Os registros exibidos nas telas e exemplos apresentados têm caráter ilustrativo e servem apenas para demonstrar o funcionamento das funcionalidades de cadastro, compatibilidade e manifestação de interesse.
+
+---
+
 ## Demonstração Online
 
 Acesse a versão publicada:
